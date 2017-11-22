@@ -1,0 +1,58 @@
+.form-group {
+  display: inline-block;
+}
+#line {
+  margin-top: 25px;
+  margin-bottom: 5px;
+  .has-warning {
+    order: 1;
+    margin-left: 36px;
+  }
+  .has-success{
+    order: 1;
+  }
+  .form-control {
+    display: inline;
+    width: 200px;
+    margin-left: 10px;
+  }
+  #colorchange {
+    height: 25px;
+    margin: 0 0 2px 10px;
+    padding: 2px;
+  }
+  #lineWidthchange {
+    display: inline;
+    height: 0px;
+    width: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+.maincontainer {
+  margin-left: 40px;
+}
+.btn-group-justified {
+  width: 600px;
+  margin-bottom: 22px;
+}
+#canvas {
+  border: 1px solid black;
+  display: block;
+}
+
+
+#selecter {
+  width: 60px;
+  height: 30px;
+}
+#toolbar {
+  display: block;
+  margin: 15px 0;
+  #tool {
+    font-size: 15px;
+    padding: 6px 17px;
+    margin-right: 10px;
+  }
+}

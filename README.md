@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # [![Web Starter Kit](https://cloud.githubusercontent.com/assets/110953/11445049/f05512ba-9520-11e5-8fdb-8c8eb5f690d0.jpg)](https://github.com/google/web-starter-kit/releases/latest)
 
 ## Overview
@@ -75,3 +76,16 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 
 Apache 2.0  
 Copyright 2015 Google Inc
+=======
+[✔]: src/img/screenshot.png
+
+# JS paint
+
+<h1 align="center">
+  <img src="src/img/screenshot.png" alt="Node.js Best Practices" />
+</h1>
+
+<br/>
+
+## [Online Demo](https://gary-js-paint.netlify.com/)
+>>>>>>> b1b6c8f6588442fd568905f3fc280d43ce73dff7

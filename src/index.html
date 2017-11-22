@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS Painter</title>
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/3/slate/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Add your site or app content here -->
+    <nav class="navbar navbar-default" >
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" style="margin-left: 10px">Gary's painter</a>
+        </div>
+      </div>
+    </nav>
+    <div class="maincontainer">
+      <div id = "toolbar">
+        <a id="tool" class="badge badge-primary">Pen</a>
+        <a id="tool" class="badge badge-secondary">Spray</a>
+        <a id="tool" class="badge badge-success">Eraser</a>
+      </div>
+      <div id = "line">
+        <div class="form-group has-success">
+          <label class="control-label" >LineWidth</label>
+          <input id="lineWidthchange" class="form-control" type="range" min="0" max="50">
+        </div>
+        <div class="form-group has-warning">
+          <label class="control-label" >LineColor</label>
+          <input type="color" class="form-control" id="colorchange" value="#ff0000" name="color">
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified">
+        <a href="#" id="undo" class="btn btn-default">Undo</a>
+        <!-- <button id="clear" type="button" class="btn">clear</button> -->
+        <a href="#" id="clear" class="btn btn-default">Clear</a>
+        <a href="#" id="redo" class="btn btn-default">Redo</a>
+      </div>
+      <!-- <a class="badge badge-danger">Danger</a> -->
+      <canvas id="canvas" width="600" height="400"></canvas>
+      <form class="navbar-form navbar-left" style="margin-left:434px; margin-top:10px">
+        <div class="form-group">
+          <select id = "selecter">
+            <option value="png">png</option>
+            <option value="jpg">jpg</option>
+          </select>
+        </div>
+        <a id="download" class="btn btn-default" style="margin-top:5px">Download</a>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
