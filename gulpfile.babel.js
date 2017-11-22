@@ -38,12 +38,12 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('lint', () =>
-  gulp.src(['app/scripts/**/*.js','!node_modules/**'])
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
-);
+// gulp.task('lint', () =>
+//   gulp.src(['app/scripts/**/*.js','!node_modules/**'])
+//     .pipe($.eslint())
+//     .pipe($.eslint.format())
+//     .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
+// );
 
 // Optimize images
 gulp.task('images', () =>
@@ -112,6 +112,7 @@ gulp.task('scripts', () =>
       //       to be correctly concatenated
       './app/scripts/main.js'
       // Other scripts
+      // './app/scripts/painter.js'
     ])
       .pipe($.newer('.tmp/scripts'))
       .pipe($.sourcemaps.init())
@@ -155,6 +156,11 @@ gulp.task('html', () => {
 // Clean output directory
 gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
+// github
+gulp.task('deploy', ['default'], () => {
+  return gulp.src('dist/**/*')
+    .pipe($.ghPages());
+});
 // Watch files for changes & reload
 gulp.task('serve', ['scripts', 'styles'], () => {
   browserSync({
@@ -173,7 +179,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
+  gulp.watch(['app/scripts/**/*.js'], ['scripts', reload]);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -197,7 +203,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'html', 'scripts', 'images', 'copy'],
+    ['html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     cb
   )
