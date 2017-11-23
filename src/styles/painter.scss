@@ -50,9 +50,12 @@
 #toolbar {
   display: block;
   margin: 15px 0;
-  #tool {
+  .tool {
     font-size: 15px;
     padding: 6px 17px;
     margin-right: 10px;
   }
+}
+.selected {
+  color: black;
 }

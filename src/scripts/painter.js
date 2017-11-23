@@ -1,6 +1,7 @@
-let md = false;
-let cPushArray = new Array();
-let cStep = -1;
+let cPushArray = []
+let cStep = -1
+let _intervalId    // used to track the current interval ID
+let _center        // the current center to spray
 const canvas = document.getElementById('canvas')
 const lineWidthchange = document.getElementById('lineWidthchange')
 const colorchange = document.getElementById('colorchange')
@@ -9,10 +10,24 @@ const selecter = document.getElementById('selecter')
 const download = document.getElementById('download')
 const undo = document.getElementById("undo")
 const redo = document.getElementById("redo")
-const context = canvas.getContext('2d');
-let mouse = {x: 0, y: 0};
-let brushWidth = 10;
-let brushColor = '#ff0000';
+const spray = document.getElementById("spray")
+const pen = document.getElementById("pen")
+const context = canvas.getContext('2d')
+let mouse = {x: 0, y: 0}
+let brushWidth = 10
+let density = 50;
+let sprayon = false
+let penon = true
+let md = false
+let spraycolor =  '#ff0000'
+context.lineWidth = brushWidth;
+context.lineJoin = 'round';
+context.lineCap = 'round';
+context.strokeStyle = '#ff0000'
+context.fillStyle = "white";
+context.fillRect(0, 0, 600, 400);
+pen.classList.add('selected')
+
 
 canvas.addEventListener('mousedown', down);
 canvas.addEventListener('mouseup', toggledraw);
@@ -22,27 +37,40 @@ function(evt) {
   mouse.y = evt.pageY - this.offsetTop;
   draw(canvas, mouse.x, mouse.y);
 });
-context.lineWidth = brushWidth;
-context.lineJoin = 'round';
-context.lineCap = 'round';
-context.strokeStyle = brushColor;
-context.fillStyle = "white";
-context.fillRect(0, 0, 600, 400);
+
 function down() {
-  md = true;
-  context.beginPath();
-  context.moveTo(mouse.x, mouse.y);
+  if (penon)
+  {
+    md = true;
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+  }
+  if (sprayon) {
+    timeout = setTimeout(function draw() {
+    for (var i = density; i--; ) {
+      var angle = getRandomFloat(0, Math.PI*2);
+      var radius = getRandomFloat(0, brushWidth);
+      context.fillStyle = spraycolor
+      context.fillRect(
+        mouse.x + radius * Math.cos(angle),
+        mouse.y + radius * Math.sin(angle),
+        1, 1);
+    }
+    if (!timeout) return;
+    timeout = setTimeout(draw, 50);
+  }, 50);
+  }
 }
+
 function toggledraw() {
   md = false;
   canvas.style.cursor= "default";
   cPush() ;
+  clearTimeout(timeout);
 }
 function draw(canvas, posx, posy){
-
   if(md) {
     canvas.style.cursor= "pointer";
-    // context.fillRect(posx, posy, size, size)
     context.lineTo(mouse.x, mouse.y);
     context.stroke();
   }
@@ -56,8 +84,9 @@ lineWidthchange.addEventListener("change",
 // brushStyle
 colorchange.addEventListener("change",
   function(e) {
-    brushColor = e.target.value;
-    context.strokeStyle = brushColor;
+    context.strokeStyle = e.target.value;
+    spraycolor = e.target.value
+    context.fillStyle = spraycolor
 })
 // clear
 clear.addEventListener("click",
@@ -82,9 +111,9 @@ function downloadCanvas(link, canvasId, filename) {
 function cPush() {
     cStep++;
     if (cStep < cPushArray.length) { cPushArray.length = cStep; }
-    cPushArray.push(document.getElementById('canvas').toDataURL());
+    cPushArray.push(canvas.toDataURL());
 }
-// Undo
+// Undo SLICE
 undo.addEventListener("click", function () {
     if (cStep > 0) {
         cStep--;
@@ -103,28 +132,24 @@ redo.addEventListener("click", function () {
     }
 })
 
+//Spray
+function getRandomFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
+spray.addEventListener("click",
+  function() {
+    penon = false
+    sprayon = true
+    spray.classList.add('selected')
+    pen.classList.remove('selected')
 
-
-// function savestep(){
-//   let e=context.getImageData(0,0,600,400);
-//   // E.width=D.width,
-//   // E.height=D.height,
-//   // E.style.width=D.width+"px",
-//   // E.style.height=D.height+"px",
-//   // v.style.left=D.width+"px",
-//   // v.style.top=D.height+"px",
-//   // a(),d(),
-//   S.putImageData(e,0,0),
-//   r()}
-// function r(){
-//   var e=S.getImageData(0,0,E.width,E.height);
-//   Y<X.length-1&&(X=X.slice(0,Y+1)),
-//   X.push(e),Y=X.length-1,c()}
-// function u(e){
-//   var t=Y+e;t<0||t>=X.length||(Y=t,c(),
-//   D.width===X[Y].width&&D.height===X[Y].height||(D.width=X[Y].width,
-//   D.height=X[Y].height,
-//   E.width=D.width,E.height=D.height,E.style.width=D.width+"px",
-//   E.style.height=D.height+"px",v.style.left=D.width+"px",
-//   v.style.top=D.height+"px",d()),S.putImageData(X[Y],0,0))}
-// function c(){y.disabled=Y<=0,Y>=X.length-1?w.disabled=!0:w.disabled=!1}
+  })
+context.fillStyle = '#ff0000';
+//pen
+pen.addEventListener("click",
+  function() {
+    penon = true
+    sprayon = false
+    pen.classList.add('selected')
+    spray.classList.remove('selected')
+  })

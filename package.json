@@ -11,7 +11,7 @@
     "html": {
       "template": "src/index.html"
     }
-  },
+  }, 
   "author": "",
   "license": "ISC",
   "devDependencies": {
