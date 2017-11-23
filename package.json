@@ -1,0 +1,23 @@
+{
+  "name": "js-painter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "poi",
+    "build": "poi build"
+  },
+  "poi": {
+    "html": {
+      "template": "src/index.html"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.7.1",
+    "poi": "^9.5.2",
+    "sass-loader": "^6.0.6"
+  },
+  "dependencies": {}
+}
