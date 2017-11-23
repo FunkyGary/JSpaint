@@ -1,2 +1,8 @@
 node_modules
+<<<<<<< HEAD
+dist/
+.tmp
+app.yaml
+=======
 dist
+>>>>>>> b1b6c8f6588442fd568905f3fc280d43ce73dff7
