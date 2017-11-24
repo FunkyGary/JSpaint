@@ -12,14 +12,17 @@ const undo = document.getElementById("undo")
 const redo = document.getElementById("redo")
 const spray = document.getElementById("spray")
 const pen = document.getElementById("pen")
+const eraser = document.getElementById("eraser")
 const context = canvas.getContext('2d')
 let mouse = {x: 0, y: 0}
 let brushWidth = 10
 let density = 50;
+let eraseron = false
 let sprayon = false
 let penon = true
 let md = false
 let spraycolor =  '#ff0000'
+let brushcolor =  '#ff0000'
 context.lineWidth = brushWidth;
 context.lineJoin = 'round';
 context.lineCap = 'round';
@@ -39,9 +42,17 @@ function(evt) {
 });
 
 function down() {
+  if (eraseron)
+  {
+    md = true;
+    context.strokeStyle = 'white';
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+  }
   if (penon)
   {
     md = true;
+    context.strokeStyle = brushcolor
     context.beginPath();
     context.moveTo(mouse.x, mouse.y);
   }
@@ -56,10 +67,12 @@ function down() {
         mouse.y + radius * Math.sin(angle),
         1, 1);
     }
-    if (!timeout) return;
     timeout = setTimeout(draw, 50);
   }, 50);
   }
+  canvas.onmouseleave = function(){
+    clearTimeout(timeout);
+  };
 }
 
 function toggledraw() {
@@ -69,12 +82,15 @@ function toggledraw() {
   clearTimeout(timeout);
 }
 function draw(canvas, posx, posy){
+  canvas.onmouseleave = function(){
+    md = false
+  };
   if(md) {
     canvas.style.cursor= "pointer";
     context.lineTo(mouse.x, mouse.y);
     context.stroke();
+    };
   }
-}
 // lineWidth
 lineWidthchange.addEventListener("change",
   function(e) {
@@ -84,7 +100,8 @@ lineWidthchange.addEventListener("change",
 // brushStyle
 colorchange.addEventListener("change",
   function(e) {
-    context.strokeStyle = e.target.value;
+    brushcolor = e.target.value;
+    context.strokeStyle = brushcolor
     spraycolor = e.target.value
     context.fillStyle = spraycolor
 })
@@ -140,9 +157,10 @@ spray.addEventListener("click",
   function() {
     penon = false
     sprayon = true
+    eraseron = false
     spray.classList.add('selected')
     pen.classList.remove('selected')
-
+    eraser.classList.remove('selected')
   })
 context.fillStyle = '#ff0000';
 //pen
@@ -150,6 +168,18 @@ pen.addEventListener("click",
   function() {
     penon = true
     sprayon = false
+    eraseron = false
     pen.classList.add('selected')
     spray.classList.remove('selected')
+    eraser.classList.remove('selected')
+  })
+//pen
+eraser.addEventListener("click",
+  function() {
+    eraseron = true
+    sprayon = false
+    penon = false
+    eraser.classList.add('selected')
+    spray.classList.remove('selected')
+    pen.classList.remove('selected')
   })
