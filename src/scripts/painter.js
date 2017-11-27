@@ -13,6 +13,7 @@ const redo = document.getElementById("redo")
 const spray = document.getElementById("spray")
 const pen = document.getElementById("pen")
 const eraser = document.getElementById("eraser")
+const picker = document.getElementById("picker")
 const context = canvas.getContext('2d')
 let mouse = {x: 0, y: 0}
 let brushWidth = 10
@@ -20,6 +21,7 @@ let density = 50;
 let eraseron = false
 let sprayon = false
 let penon = true
+let pickeron = false
 let md = false
 let spraycolor =  '#ff0000'
 let brushcolor =  '#ff0000'
@@ -158,9 +160,11 @@ spray.addEventListener("click",
     penon = false
     sprayon = true
     eraseron = false
+    pickeron = false
     spray.classList.add('selected')
     pen.classList.remove('selected')
     eraser.classList.remove('selected')
+    picker.classList.remove('selected')
   })
 context.fillStyle = '#ff0000';
 //pen
@@ -169,17 +173,33 @@ pen.addEventListener("click",
     penon = true
     sprayon = false
     eraseron = false
+    pickeron = false
     pen.classList.add('selected')
     spray.classList.remove('selected')
     eraser.classList.remove('selected')
+    picker.classList.remove('selected')
   })
-//pen
+//eraser
 eraser.addEventListener("click",
   function() {
     eraseron = true
     sprayon = false
     penon = false
+    pickeron = false
     eraser.classList.add('selected')
+    spray.classList.remove('selected')
+    pen.classList.remove('selected')
+    picker.classList.remove('selected')
+  })
+//picker
+picker.addEventListener("click",
+  function() {
+    pickeron = true
+    sprayon = false
+    penon = false
+    eraseron = false
+    picker.classList.add('selected')
+    eraser.classList.remove('selected')
     spray.classList.remove('selected')
     pen.classList.remove('selected')
   })
