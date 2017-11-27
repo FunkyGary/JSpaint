@@ -79,9 +79,6 @@ function down() {
     timeout = setTimeout(draw, 50);
   }, 50);
   }
-  canvas.onmouseleave = function(){
-    clearTimeout(timeout);
-  };
 }
 
 function toggledraw() {
@@ -93,6 +90,8 @@ function toggledraw() {
 function draw(canvas, posx, posy){
   canvas.onmouseleave = function(){
     md = false
+    clearTimeout(timeout);
+    console.log('good')
   };
   if(md) {
     canvas.style.cursor= "pointer";
