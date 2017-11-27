@@ -44,6 +44,13 @@ function(evt) {
 });
 
 function down() {
+  if (pickeron)
+  {
+
+    context.strokeStyle = 'white';
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+  }
   if (eraseron)
   {
     md = true;
